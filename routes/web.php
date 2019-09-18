@@ -1,5 +1,5 @@
 <?php
-
+use Illuminate\Support\Facades\Redis;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,4 +13,10 @@
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::get('publish', function () {
+    // 路由邏輯...
+
+    Redis::publish('test-channel', json_encode(['foo' => 'bar']));
 });
