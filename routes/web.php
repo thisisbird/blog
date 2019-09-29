@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Redis;
 |
 */
 
-Route::get('/', function () {
+Route::get('/1', function () {
     return view('welcome');
 });
 Route::get('/2', function () {
@@ -23,3 +23,6 @@ Route::get('publish', function () {
 
     Redis::publish('test-channel', json_encode(['foo' => 'bar']));
 });
+
+//web.php
+Route::get('/', 'HomeController@index')->name('home');
