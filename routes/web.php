@@ -25,4 +25,4 @@ Route::get('publish', function () {
 });
 
 //web.php
-Route::get('/', 'HomeController@index')->name('home');
+Route::get('/post/{id}', 'PostController@index');

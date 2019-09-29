@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Post;
 use App\Comment;
-class CommentController extends Controller
+use Auth;
+class PostController extends Controller
 {
     public function index(Post $post){
-        $a = $post->comments()->with('user')->orderBy('id','asc')->get();
-        return response()->json($a);
+        $post = $post->first();
+
+        return view('home', compact('post'));
     }
     public function store(Request $request,Post $post){
         $comment = $post->comments()->create([
