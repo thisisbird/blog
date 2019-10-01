@@ -18,7 +18,8 @@
         
     </div>
     <div id="comment">
-        {{-- <textarea name="" id="" cols="30" rows="10" v-model="commentBox"></textarea> --}}
+        <textarea name="body" id="" cols="30" rows="10" v-model="commentBox"></textarea>
+        <button @click.prevent="postComment">save</button>
         <div v-for="comment in comments">
                 @{{comment.user.name}} said...
                 @{{comment.body}}
@@ -28,12 +29,13 @@
     <script src="/js/app.js"></script>
 </body>
 <script>
+    
 const app = new Vue({
             el:'#comment',
             data:{
                 comments: {},
                 commentBox: '',
-                post : {!! $post->toJson()!!},
+                post : @json($post),
                 user : {!! Auth::check() ? Auth::user()->toJson : 'null' !!}
             },
             mounted() {
@@ -49,8 +51,18 @@ const app = new Vue({
                         console.log(error);
                     });
                 },
-                postComments(){
-
+                postComment(){
+                    axios.post(`/api/posts/${this.post.id}/comments`,{
+                        // api_token: this.user.api_token,
+                        body: this.commentBox
+                    })
+                    .then((response)=>{
+                        this.comments.unshift(response.data);
+                        this.commentBox = '';
+                    })
+                    .catch(function(error){
+                        console.log(error);
+                    });
                 }
             }
 });
