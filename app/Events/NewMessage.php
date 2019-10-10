@@ -10,7 +10,7 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
-
+use App\Comment;
 class NewMessage implements ShouldBroadcastNow
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
@@ -21,11 +21,11 @@ class NewMessage implements ShouldBroadcastNow
      * @return void
      */
 
-    public $message;
+    public $comment;
 
-    public function __construct($message)
+    public function __construct(Comment $comment)
     {
-        $this->message = $message;
+        $this->comment = $comment;
     }
 
     /**
@@ -35,12 +35,16 @@ class NewMessage implements ShouldBroadcastNow
      */
     public function broadcastOn()
     {
-        return new Channel('home');
+        return new Channel('post.'.$this->comment->post->id);
     }
     public function broadcastWith(){
         return [
-            'test'=>$this->message,
-            'qq'=>now()->toFormattedDateString()
-            ];
+            'body'=>$this->comment->body,
+            'created_at'=>$this->comment->created_at->toFormattedDateString(),
+            'user' =>[
+                'name'=>$this->comment->user->name,
+                'avatar'=>''
+            ]
+        ];
     }
 }

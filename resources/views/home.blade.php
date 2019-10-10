@@ -40,6 +40,7 @@ const app = new Vue({
             },
             mounted() {
                 this.getComments();
+                this.listen();
             },
             methods:{
                 getComments(){
@@ -63,6 +64,13 @@ const app = new Vue({
                     .catch(function(error){
                         console.log(error);
                     });
+                },
+                listen(){
+                    console.log(this.post.id);
+                    Echo.channel('post.'+this.post.id)
+                        .listen('NewMessage',(comment)=>{
+                            this.comments.unshift(comment);
+                        })
                 }
             }
 });

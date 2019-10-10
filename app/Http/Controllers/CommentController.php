@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Post;
 use App\Comment;
 use Auth;
+use App\Events\NewMessage;
 class CommentController extends Controller
 {
     public function index(Post $post){
@@ -19,6 +20,9 @@ class CommentController extends Controller
             'user_id' => 1
         ]);
         $comment = Comment::where('id',$comment->id)->with('user')->first();
+        // event(new NewMessage($comment));
+        broadcast(new NewMessage($comment))->toOthers();//只傳給其他人
+        
         return $comment->toJson();
     }
 }
