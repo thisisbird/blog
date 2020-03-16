@@ -8,9 +8,8 @@ use App\Comment;
 use Auth;
 class PostController extends Controller
 {
-    public function index(Post $post){
-        $post = $post->first();
-
+    public function index(Post $id){
+        $post = $id;
         return view('home', compact('post'));
     }
     public function store(Request $request,Post $post){

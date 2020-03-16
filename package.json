@@ -25,7 +25,7 @@
         "express": "^4.17.1",
         "ioredis": "^4.14.1",
         "laravel-echo": "^1.6.1",
-        "pusher-js": "^5.0.1",
+        "pusher-js": "^5.1.1",
         "redis": "^2.8.0",
         "redis-server": "^1.2.2",
         "socket.io": "^2.2.0",
