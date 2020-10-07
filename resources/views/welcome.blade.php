@@ -96,11 +96,12 @@
                 </div>
             </div>
         </div>
-
+        <div id="app"></div>
     <script src="{{asset('js/app.js')}}"></script>
     <script>
+        console.log(123);
     Echo.channel('home')
-        .listen('NewMessage',(e)=>{
+        .listen('NewMessageHome',(e)=>{
             console.log(e);
         })
     </script>
